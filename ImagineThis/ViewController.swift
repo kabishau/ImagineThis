@@ -16,6 +16,17 @@ class ViewController: UIViewController {
         layout.itemSize = CGSize(width: width, height: width)
 
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailSegue" {
+            if let destinationViewController = segue.destination as? DetailViewController {
+                //if let indexPath = collectionView.indexPathsForSelectedItems?.first {
+                if let indexPath = sender as? IndexPath {
+                    destinationViewController.selection = categories[indexPath.row]
+                }
+            }
+        }
+    }
 }
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -25,10 +36,16 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath)
-        if let label = cell.viewWithTag(100) as? UILabel {
-            label.text = categories[indexPath.row]
+        if let imageView = cell.viewWithTag(100) as? UIImageView {
+            imageView.image = UIImage(named: "button_\(categories[indexPath.row])") 
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // using indexPath to have this
+        performSegue(withIdentifier: "DetailSegue", sender: indexPath)
     }
 }
 
