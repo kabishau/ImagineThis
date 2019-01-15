@@ -11,9 +11,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let width = (view.frame.size.width - (2 * 40 + 20)) / 2
+        let width = (view.frame.size.width - (2 * 45 + 30)) / 2
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: width, height: width)
+        layout.itemSize = CGSize(width: width, height: width * 1.1473)
 
     }
     
@@ -35,10 +35,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath)
-        if let imageView = cell.viewWithTag(100) as? UIImageView {
-            imageView.image = UIImage(named: "button_\(categories[indexPath.row])") 
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
+        cell.categoryImage.image = UIImage(named: "button_\(categories[indexPath.row])")
         return cell
     }
     
